@@ -1,19 +1,21 @@
-// Firebase Config (replace with your own config from Firebase Console)
+// Firebase Config (use your provided configuration)
 const firebaseConfig = {
   apiKey: "AIzaSyA_fSL1piT6dBlJdPUqmHSwYxanbY7xhcs",
   authDomain: "phoenix-chatting.firebaseapp.com",
   projectId: "phoenix-chatting",
-  storageBucket: "phoenix-chatting.firebasestorage.app",
+  storageBucket: "phoenix-chatting.appspot.com", // Corrected bucket URL
   messagingSenderId: "525296549399",
   appId: "1:525296549399:web:aebe69b04c3fe4e67de652",
   measurementId: "G-PRGGY4FPZW"
 };
-firebase.initializeApp(firebaseConfig);
 
+// Initialize Firebase
+firebase.initializeApp(firebaseConfig);
 const auth = firebase.auth();
 const db = firebase.firestore();
 const storage = firebase.storage();
 
+// Monitor authentication state
 auth.onAuthStateChanged(user => {
   if (user) {
     document.getElementById("authContainer").style.display = "none";
@@ -25,24 +27,43 @@ auth.onAuthStateChanged(user => {
   }
 });
 
+// Registration function
 function register() {
   const email = document.getElementById("email").value;
   const password = document.getElementById("password").value;
+
   auth.createUserWithEmailAndPassword(email, password)
-    .catch(error => console.error(error.message));
+    .then(() => {
+      console.log("User registered:", email);
+      alert("Registration successful! You can now log in.");
+    })
+    .catch(error => {
+      console.error("Error registering:", error.message);
+      alert(error.message);
+    });
 }
 
+// Login function
 function login() {
   const email = document.getElementById("email").value;
   const password = document.getElementById("password").value;
+
   auth.signInWithEmailAndPassword(email, password)
-    .catch(error => console.error(error.message));
+    .then(userCredential => {
+      console.log("Logged in as:", userCredential.user.email);
+    })
+    .catch(error => {
+      console.error("Error logging in:", error.message);
+      alert(error.message); // Alert the user for better visibility
+    });
 }
 
+// Logout function
 function logout() {
   auth.signOut();
 }
 
+// Load messages function
 function loadMessages() {
   db.collection("messages").orderBy("timestamp").onSnapshot(snapshot => {
     const messages = document.getElementById("messages");
@@ -56,6 +77,7 @@ function loadMessages() {
   });
 }
 
+// Send message function
 function sendMessage() {
   const messageInput = document.getElementById("messageInput");
   const message = messageInput.value;
@@ -69,6 +91,7 @@ function sendMessage() {
   }
 }
 
+// Send file function
 function sendFile() {
   const fileInput = document.getElementById("fileInput");
   const file = fileInput.files[0];
@@ -86,4 +109,3 @@ function sendFile() {
     fileInput.value = "";
   }
 }
-
