@@ -1,11 +1,12 @@
 // Firebase Config (replace with your own config from Firebase Console)
 const firebaseConfig = {
-  apiKey: "YOUR_API_KEY",
-  authDomain: "YOUR_AUTH_DOMAIN",
-  projectId: "YOUR_PROJECT_ID",
-  storageBucket: "YOUR_STORAGE_BUCKET",
-  messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
-  appId: "YOUR_APP_ID"
+  apiKey: "AIzaSyA_fSL1piT6dBlJdPUqmHSwYxanbY7xhcs",
+  authDomain: "phoenix-chatting.firebaseapp.com",
+  projectId: "phoenix-chatting",
+  storageBucket: "phoenix-chatting.firebasestorage.app",
+  messagingSenderId: "525296549399",
+  appId: "1:525296549399:web:aebe69b04c3fe4e67de652",
+  measurementId: "G-PRGGY4FPZW"
 };
 firebase.initializeApp(firebaseConfig);
 
